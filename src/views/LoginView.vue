@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-btn-toggle
-      title
       group
       mandatory
       color="orange accent-3"
@@ -36,7 +35,7 @@ import NoneCard from '../components/Login/NoneComponenet.vue'
 export default {
   data() {
     return {
-      loginChoice: 'none',
+      loginChoice: 'normal',
     }
   },
   components: {

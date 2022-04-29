@@ -31,9 +31,13 @@
       </v-btn>
       <div class="justify-end mt-1 d-flex">
         <v-btn text small color="grey" width="20%">
-          <v-card-text class="findText">아이디 찾기</v-card-text>
+          <v-card-text class="findText"
+            @click="$router.push('/forgot/'+loginchoice+'id')"
+          >아이디 찾기</v-card-text>
         </v-btn>
-        <v-btn text small color="grey" width="24%">
+        <v-btn text small color="grey" width="24%"
+          @click="$router.push('/forgot/'+loginchoice+'password')"
+        >
           <v-card-text class="findText">비밀번호 찾기</v-card-text>
         </v-btn>
         <v-btn text small color="grey" width="15%">

@@ -16,7 +16,14 @@ const routes = [
     component: function () {
       return import('../views/LoginView.vue')
     }
-  }
+  },
+  {
+    path: '/forgot/:target',
+    name: 'forgot',
+    component: function () {
+      return import('../views/ForgotView.vue')
+    }
+  },
 ]
 
 const router = new VueRouter({
