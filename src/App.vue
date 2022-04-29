@@ -23,6 +23,7 @@
       <v-text-field
         outlined dense
         id="serch"
+        hide-details
       ></v-text-field>
 
       <v-spacer></v-spacer>
@@ -73,13 +74,5 @@ export default {
 
   #app-bar {
     border-bottom: 1px solid black !important;
-  }
-
-  #app-bar .v-text-field__details {
-    display: none;
-  }
-
-  #app-bar .v-input__slot {
-    margin-bottom: 0;
   }
 </style>
