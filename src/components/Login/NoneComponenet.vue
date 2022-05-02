@@ -32,7 +32,9 @@
             @click="$router.push('/forgot/none/password')"
           >주문 비밀번호 찾기</v-card-text>
         </v-btn>
-        <v-btn text small color="grey" width="27%">
+        <v-btn text small color="grey" width="27%"
+          @click="$router.push('/sighup')"
+        >
           <v-card-text class="findText">회원가입</v-card-text>
         </v-btn>
       </div>

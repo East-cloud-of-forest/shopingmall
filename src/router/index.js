@@ -24,6 +24,13 @@ const routes = [
     }
   },
   {
+    path: '/sighup',
+    name: 'sighup',
+    component: function () {
+      return import('../views/SighupView.vue')
+    }
+  },
+  {
     path: '/forgot/:target/:kind',
     name: 'forgot',
     component: function () {

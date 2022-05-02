@@ -1,19 +1,10 @@
 <template>
   <v-app>
     <v-app-bar id="app-bar" color="white" flat :height="appberSize"
-      :style="{display: this.$route.name=='unmade'?'none':'block'}"
+      :style="{display:appberSize==0?'none':'block'}"
     >
       <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="mx-3"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-          :style="{cursor:'pointer'}"
-          @click="LogoClick"
-        />
+        <LogoComponenet style="width:40px;" class="mx-3" />
       </div>
 
       <v-text-field outlined dense id="serch" hide-details></v-text-field>
@@ -33,13 +24,14 @@
       </v-btn>
     </v-app-bar>
 
-    <v-main>
+    <v-main min-height="100%">
       <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
+import LogoComponenet from './components/LogoComponenet.vue'
 export default {
   name: 'App',
 
@@ -48,9 +40,7 @@ export default {
   }),
 
   methods: {
-    LogoClick() {
-      this.$router.push('/').catch(() => {})
-    },
+
   },
 
   computed: {
@@ -61,10 +51,18 @@ export default {
         case "forgot" :
           size = 80
           break
+        case "unmade" :
+        case "sighup" :
+          size = 0
+          break
       }
       return size
     },
   },
+
+  components: {
+    LogoComponenet
+  }
 }
 </script>
 

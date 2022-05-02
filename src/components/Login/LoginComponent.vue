@@ -4,7 +4,7 @@
       일반회원 로그인
     </v-card-subtitle>
     <v-card-subtitle v-if="loginchoice == 'company'" class="pb-12">
-      기업회원 로그인
+      사업자회원 로그인
     </v-card-subtitle>
 
     <v-card-actions>
@@ -40,7 +40,9 @@
         >
           <v-card-text class="findText">비밀번호 찾기</v-card-text>
         </v-btn>
-        <v-btn text small color="grey" width="15%">
+        <v-btn text small color="grey" width="15%"
+          @click="$router.push('/sighup')"
+        >
           <v-card-text class="findText">회원가입</v-card-text>
         </v-btn>
       </div>

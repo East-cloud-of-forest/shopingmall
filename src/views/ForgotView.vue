@@ -55,7 +55,7 @@ export default {
           target = '개인회원'
           break
         case 'company':
-          target = '기업회원'
+          target = '사업자회원'
           break
         case 'none':
           target = '비회원 주문'
