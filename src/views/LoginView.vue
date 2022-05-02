@@ -18,12 +18,26 @@
       </v-btn>
     </v-btn-toggle>
 
-    <v-card max-width="423" class="mx-auto my-12 pa-5">
+    <v-card max-width="423" elevation="0" tile outlined class="mx-auto my-12 pa-5">
       <LoginCard
         v-if="loginChoice == 'normal' || loginChoice == 'company'"
         :loginchoice="loginChoice"
       />
       <NoneCard v-else />
+
+      <div class="d-flex align-center">
+        <v-divider></v-divider>
+        <v-card-subtitle class="orange--text">OR</v-card-subtitle>
+        <v-divider></v-divider>
+      </div>
+      <v-img
+        :src="require(`../assets/btn_google_signin_light_normal_web@2x.png`)"
+        @click="googleLogin"
+        :style="{ cursor: 'pointer' }"
+        max-width="196"
+        block
+        class="mx-auto"
+      ></v-img>
     </v-card>
   </v-app>
 </template>
@@ -41,6 +55,11 @@ export default {
   components: {
     LoginCard,
     NoneCard,
+  },
+  methods: {
+    googleLogin() {
+
+    }
   },
 }
 </script>

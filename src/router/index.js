@@ -18,7 +18,7 @@ const routes = [
     }
   },
   {
-    path: '/forgot/:target',
+    path: '/forgot/:target/:kind',
     name: 'forgot',
     component: function () {
       return import('../views/ForgotView.vue')
