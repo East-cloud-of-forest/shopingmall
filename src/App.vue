@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar id="app-bar" color="white" flat :shrink="true" :height="appberSize">
+    <v-app-bar id="app-bar" color="white" flat :height="appberSize"
+      :style="{display: this.$route.name=='unmade'?'none':'block'}"
+    >
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -73,6 +75,6 @@ body {
 }
 
 #app-bar {
-  border-bottom: 1px solid black !important;
+  border-bottom: 1px solid lightgrey !important;
 }
 </style>

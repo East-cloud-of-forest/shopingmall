@@ -1,5 +1,5 @@
 <template>
-  <div v-if="way == 'email'">
+  <div>
     <v-card-title>
       이메일 인증
     </v-card-title>

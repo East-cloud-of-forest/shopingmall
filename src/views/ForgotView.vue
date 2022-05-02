@@ -25,7 +25,9 @@
         />
 
         <div v-else>
-          <v-btn block color="red" dark large>핸드폰 인증</v-btn>
+          <v-btn block color="red" dark large
+            @click="$store.commit('unmade')"
+          >핸드폰 인증</v-btn>
         </div>
       </v-card>
     </div>
