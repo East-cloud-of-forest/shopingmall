@@ -11,11 +11,15 @@
 
     <v-expansion-panels
       accordion multiple
-      v-model="panelopen" :readonly="true"
+      v-model="open" :readonly="true"
     >
       <v-expansion-panel v-for="(agree, i) in agreementform" :key="i">
         <v-expansion-panel-header class="text-body-1">
-          <v-checkbox dense hide-details class="pa-0" v-model="agreement[i]">
+          <v-checkbox
+            dense hide-details
+            class="pa-0" v-model="agreement[i]"
+            @click="agreemethod(i)"
+          >
             <template v-slot:label>
               {{ agree.title }}
             </template>
@@ -43,19 +47,20 @@ export default {
         0 : false,
         1 : false
       },
+      open: [0, 1]
     }
   },
-  methods: {},
-  computed: {
-    panelopen() {
-      let open = [0, 1]
-
-      if(this.agreement[0]) {
-        open = [1]
+  methods: {
+    agreemethod(i) {
+      if (this.agreement[i]) {
+        this.open.splice(i, 1, 999)
+      } else {
+        this.open.splice(i, 1, i)
       }
-
-      return open
     }
+  },
+  computed: {
+
   }
 }
 </script>
