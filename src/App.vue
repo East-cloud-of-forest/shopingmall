@@ -53,6 +53,9 @@ export default {
           break
         case "unmade" :
         case "sighup" :
+        case "sighupc1" :
+        case "sighupc2" :
+        case "sighupc3" :
           size = 0
           break
       }
