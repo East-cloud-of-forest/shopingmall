@@ -1,5 +1,5 @@
 <template>
-  <v-container style="width: 450px;">
+  <v-container>
     <v-checkbox v-model="allagree" color="orange">
       <template v-slot:label>
         <div class="black--text text-subtitle-1">
