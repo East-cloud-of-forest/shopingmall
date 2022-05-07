@@ -22,7 +22,7 @@
       style="background: white;"
       width="200"
       height="200"
-      @click="$router.push('/'+kind)"
+      @click="$router.push('/sighup/'+kind)"
     >
       <div>
         <h1 :class="kind == 'normal' ? 'orange--text' : 'deep-orange--text'">

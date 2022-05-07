@@ -33,7 +33,7 @@
           >주문 비밀번호 찾기</v-card-text>
         </v-btn>
         <v-btn text small color="grey" width="27%"
-          @click="$router.push('/sighup')"
+          @click="$router.push('/choice')"
         >
           <v-card-text class="findText">회원가입</v-card-text>
         </v-btn>

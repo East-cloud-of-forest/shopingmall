@@ -31,17 +31,24 @@ const routes = [
     },
     children: [
       {
-        path: '/',
+        path: '/choice',
         name: 'sighupc1',
         component: function() {
           return import('../components/sighup/KindComponent.vue')
         }
       },
       {
-        path: '/:kind',
+        path: '/sighup/:kind',
         name: 'sighupc2',
         component: function() {
           return import('../components/sighup/NormalComponent.vue')
+        }
+      },
+      {
+        path: '/welcome',
+        name: 'sighupc3',
+        component: function() {
+          return import('../components/sighup/WelcomeComponent.vue')
         }
       }
     ]

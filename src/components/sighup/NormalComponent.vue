@@ -186,6 +186,7 @@ export default {
       this.$refs.form.validate()
       if (this.valid) {
         console.log(this.user)
+        this.$router.push('/welcome')
       } else {
         console.log('no')
       }

@@ -10,6 +10,7 @@
       <v-text-field outlined dense id="serch" hide-details></v-text-field>
 
       <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
       <v-btn icon class="mr-2" x-large>
         <v-icon x-large>mdi-shopping-outline</v-icon>
