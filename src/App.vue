@@ -1,7 +1,7 @@
 <template>
-  <v-app>
-    <v-app-bar id="app-bar" color="white" flat :height="appberSize"
-      :style="{display:appberSize==0?'none':'block'}"
+  <v-app :style="{maxWidth:routerDynamicSize.bodySize, margin:'auto'}">
+    <v-app-bar id="app-bar" color="white" flat :height="routerDynamicSize.size"
+      :style="{display:routerDynamicSize.size==0?'none':'block'}"
     >
       <div class="d-flex align-center">
         <LogoComponenet style="width:40px;" class="mx-3" />
@@ -37,7 +37,6 @@ export default {
   name: 'App',
 
   data: () => ({
-    //
   }),
 
   methods: {
@@ -45,8 +44,9 @@ export default {
   },
 
   computed: {
-    appberSize() {
+    routerDynamicSize() {
       let size = 120
+      let bodySize = '1400px'
       switch(this.$route.name) {
         case "login" :
         case "forgot" :
@@ -58,9 +58,10 @@ export default {
         case "sighupc2" :
         case "sighupc3" :
           size = 0
+          bodySize = '100%'
           break
       }
-      return size
+      return {size:size, bodySize:bodySize}
     },
   },
 
@@ -71,11 +72,6 @@ export default {
 </script>
 
 <style>
-body {
-  max-width: 1400px;
-  margin: auto;
-}
-
 #app-bar {
   border-bottom: 1px solid lightgrey !important;
 }
