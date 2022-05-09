@@ -41,7 +41,7 @@ const routes = [
         path: '/sighup/:kind',
         name: 'sighupc2',
         component: function() {
-          return import('../components/sighup/NormalComponent.vue')
+          return import('../components/sighup/FormComponent.vue')
         }
       },
       {

@@ -11,7 +11,7 @@
         일반회원 로그인
       </v-btn>
       <v-btn value="company">
-        사업자회원 로그인
+        판매자회원 로그인
       </v-btn>
       <v-btn value="none">
         비회원 배송조회

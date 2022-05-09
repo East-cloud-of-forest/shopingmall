@@ -4,7 +4,7 @@
       일반회원 로그인
     </v-card-subtitle>
     <v-card-subtitle v-if="loginchoice == 'company'" class="pb-12">
-      사업자회원 로그인
+      판매자회원 로그인
     </v-card-subtitle>
 
     <v-card-actions>

@@ -127,7 +127,7 @@ export default {
   data() {
     return {
       // 동의 후 회원가입 폼 이동
-      nextSighup: true,
+      nextSighup: false,
       // 날짜 선택 변수
       activePicker: null,
       menu: false,

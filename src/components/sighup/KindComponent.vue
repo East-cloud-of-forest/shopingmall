@@ -26,7 +26,7 @@
     >
       <div>
         <h1 :class="kind == 'normal' ? 'orange--text' : 'deep-orange--text'">
-          {{ kind == 'normal' ? '개인' : '사업자' }}
+          {{ kind == 'normal' ? '개인' : '판매자' }}
         </h1>
         <p class="ma-0 black--text">회원가입</p>
       </div>

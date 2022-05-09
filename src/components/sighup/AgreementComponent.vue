@@ -35,15 +35,23 @@
       </v-expansion-panel>
     </v-expansion-panels>
 
-    <p class="mt-16 text-body-2 red--text" v-if="noagree">토이쇼필몰 이용약관 동의와 <br> 개인정보 수집 및 이용 동의에 동의해주세요.</p>
+    <p class="mt-16 text-body-2 red--text" v-if="noagree">
+      필수 동의 항목에 동의해주세요.
+    </p>
 
     <div class="my-16">
-      <v-btn class="mr-3" x-large width="150"
-        @click="$router.push('/')"
-      >취소</v-btn>
-      <v-btn class="ml-3 orange" dark x-large width="150"
+      <v-btn class="mr-3" x-large width="150" @click="$router.push('/')">
+        취소
+      </v-btn>
+      <v-btn
+        class="ml-3 orange"
+        dark
+        x-large
+        width="150"
         @click="agreecomplete"
-      >확인</v-btn>
+      >
+        확인
+      </v-btn>
     </div>
   </v-container>
 </template>
@@ -54,14 +62,11 @@ import agreementform from '../../assets/agreement.js'
 export default {
   data() {
     return {
-      agreementform: agreementform,
-      agreement: {
-        0: false,
-        1: false,
-        2: false,
-      },
-      open: [0, 1, 2],
-      noagree: false
+      agreementform: null,
+      agreement: {},
+      necessary: {},
+      open: [],
+      noagree: false,
     }
   },
   methods: {
@@ -72,25 +77,33 @@ export default {
       } else {
         this.open.splice(i, 1, parseInt(i))
       }
+      if (this.necessary[i] !== undefined) {
+        this.necessary[i] = this.agreement[i]
+      }
     },
 
+    // 필수 동의서 동의 시 진행
     agreecomplete() {
-      if (this.agreement[0] && this.agreement[1]) {
+      let necessaryagree = Object.values(this.necessary).every(
+        (agree) => agree == true,
+      )
+      if (necessaryagree) {
         this.$emit('agreecomplete', this.agreement)
       } else {
         this.noagree = true
       }
-    }
+    },
   },
   computed: {
     // 전체 동의와 개별 동의 연결
     allagree: {
       get() {
-        let allagree = false
-        if (this.agreement[0] && this.agreement[1] && this.agreement[2]) {
-          allagree = true
+        let all = false
+        console.log(Object.values(this.agreement).every((agree) => agree == true))
+        if (Object.values(this.agreement).every((agree) => agree == true)) {
+          all = true
         }
-        return allagree
+        return all
       },
       set(agree) {
         if (agree) {
@@ -106,6 +119,21 @@ export default {
         }
       },
     },
+  },
+  created() {
+    if(this.$route.params.kind == 'normal') {
+      this.agreementform = agreementform.filter(e=>e.kind=='normal')
+    } else {
+      this.agreementform = agreementform
+    }
+    // 동의서탭 열림 설정 및 필수 동의 설정
+    for (let i in this.agreementform) {
+      this.open.push(parseInt(i))
+      this.agreement[i] = false
+      if (this.agreementform[i].necessary == true) {
+        this.necessary[i] = false
+      }
+    }
   },
 }
 </script>
