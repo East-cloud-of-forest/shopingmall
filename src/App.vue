@@ -36,7 +36,7 @@
           sm="10"
           offset="0"
           offset-sm="1"
-          :style="{ display: routerDynamicSize.size < 120 ? 'none' : 'block' }"
+          :style="{ display: routerDynamicSize.size < 120 ? 'none !important' : 'block' }"
           class="pa-0 d-flex align-center"
         >
           <v-menu offset-y>

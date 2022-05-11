@@ -18,6 +18,23 @@
         </v-carousel>
       </v-col>
     </v-row>
+
+    <v-row class="mx-1">
+      <v-col cols="6" sm="3" v-for="a in 4" :key="a">
+        <v-card outlined @click="'aa'">
+          <v-img height="200" class="red"></v-img>
+          <v-card-title>
+            상품명
+          </v-card-title>
+          <v-card-text>
+            상품설명
+          </v-card-text>
+          <v-card-text class="pt-0 body-1 black--text">
+            가격 원
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-app>
 </template>
 
