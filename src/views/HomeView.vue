@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-row>
-      <v-col cols="12" sm="10" offset="0" offset-sm="1">
+      <v-col cols="12">
         <v-carousel
           :show-arrows="false"
           hide-delimiter-background
@@ -20,19 +20,53 @@
     </v-row>
 
     <v-row class="mx-1">
-      <v-col cols="6" sm="3" v-for="a in 4" :key="a">
-        <v-card outlined @click="'aa'">
-          <v-img height="200" class="red"></v-img>
-          <v-card-title>
-            상품명
-          </v-card-title>
-          <v-card-text>
-            상품설명
-          </v-card-text>
-          <v-card-text class="pt-0 body-1 black--text">
-            가격 원
-          </v-card-text>
-        </v-card>
+      <v-col
+        cols="6"
+        sm="3"
+        v-for="product in mainproduct"
+        :key="product.productId"
+      >
+        <v-hover v-slot="{ hover }">
+          <v-card flat @click="goProductDetail(product)">
+            <v-img height="200" class="red" :src="product.image">
+              <v-scroll-y-reverse-transition>
+                <v-btn
+                  v-if="hover"
+                  transition="scale-transition"
+                  fab
+                  elevation="0"
+                  color="orange"
+                  dark
+                  dense
+                  class="mx-auto"
+                  style="display: block; position: relative; top: 65%;"
+                  @click.stop=""
+                >
+                  <v-icon>mdi-cart-outline</v-icon>
+                </v-btn>
+              </v-scroll-y-reverse-transition>
+            </v-img>
+            <v-card-text
+              v-html="'<b>' + product.title + '</b>'"
+              style="
+                white-space: normal !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                display: -webkit-box;
+                -webkit-line-clamp: 2 !important;
+                -webkit-box-orient: vertical;
+                height:44px;
+              "
+              class="py-0 mt-4 black--text"
+            ></v-card-text>
+            <v-card-text>
+              {{ product.category4?product.category4:product.category3?product.category3:product.category2?product.category2:product.category1 }}
+            </v-card-text>
+            <v-card-text class="text-end pt-0 body-1 font-weight-medium black--text">
+              {{ parseInt(product.lprice).toLocaleString('ko-KR') }} 원
+            </v-card-text>
+          </v-card>
+        </v-hover>
       </v-col>
     </v-row>
   </v-app>
@@ -41,5 +75,15 @@
 <script>
 export default {
   name: 'HomeView',
+  methods: {
+    goProductDetail(p) {
+      console.log(p.productId)
+    },
+  },
+  computed: {
+    mainproduct() {
+      return this.$store.state.mainproduct
+    },
+  },
 }
 </script>

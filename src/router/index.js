@@ -9,7 +9,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/unmade',
@@ -29,27 +29,39 @@ const routes = [
     component: function () {
       return import('../views/SighupView.vue')
     },
+    meta: {
+      hideAppbar: true
+    },
     children: [
       {
         path: '/choice',
         name: 'sighupc1',
         component: function() {
           return import('../components/sighup/KindComponent.vue')
-        }
+        },
+        meta: {
+          hideAppbar: true
+        },
       },
       {
         path: '/sighup/:kind',
         name: 'sighupc2',
         component: function() {
           return import('../components/sighup/FormComponent.vue')
-        }
+        },
+        meta: {
+          hideAppbar: true
+        },
       },
       {
         path: '/welcome',
         name: 'sighupc3',
         component: function() {
           return import('../components/sighup/WelcomeComponent.vue')
-        }
+        },
+        meta: {
+          hideAppbar: true
+        },
       }
     ]
   },
