@@ -23,11 +23,12 @@
       <v-col
         cols="6"
         sm="3"
+        lg="2"
         v-for="product in mainproduct"
         :key="product.productId"
       >
-        <v-hover v-slot="{ hover }">
-          <v-card flat @click="goProductDetail(product)">
+        <v-card flat @click="goProductDetail(product)">
+          <v-hover v-slot="{ hover }">
             <v-img height="200" class="red" :src="product.image">
               <v-scroll-y-reverse-transition>
                 <v-btn
@@ -46,27 +47,37 @@
                 </v-btn>
               </v-scroll-y-reverse-transition>
             </v-img>
-            <v-card-text
-              v-html="'<b>' + product.title + '</b>'"
-              style="
-                white-space: normal !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                display: -webkit-box;
-                -webkit-line-clamp: 2 !important;
-                -webkit-box-orient: vertical;
-                height:44px;
-              "
-              class="py-0 mt-4 black--text"
-            ></v-card-text>
-            <v-card-text>
-              {{ product.category4?product.category4:product.category3?product.category3:product.category2?product.category2:product.category1 }}
-            </v-card-text>
-            <v-card-text class="text-end pt-0 body-1 font-weight-medium black--text">
-              {{ parseInt(product.lprice).toLocaleString('ko-KR') }} 원
-            </v-card-text>
-          </v-card>
-        </v-hover>
+          </v-hover>
+          <v-card-text
+            v-html="'<b>' + product.title + '</b>'"
+            style="
+              white-space: normal !important;
+              overflow: hidden !important;
+              text-overflow: ellipsis !important;
+              display: -webkit-box;
+              -webkit-line-clamp: 2 !important;
+              -webkit-box-orient: vertical;
+              height: 44px;
+            "
+            class="py-0 mt-4 black--text"
+          ></v-card-text>
+          <v-card-text>
+            {{
+              product.category4
+                ? product.category4
+                : product.category3
+                ? product.category3
+                : product.category2
+                ? product.category2
+                : product.category1
+            }}
+          </v-card-text>
+          <v-card-text
+            class="text-end pt-0 body-1 font-weight-medium black--text"
+          >
+            {{ parseInt(product.lprice).toLocaleString('ko-KR') }} 원
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </v-app>
@@ -78,6 +89,9 @@ export default {
   methods: {
     goProductDetail(p) {
       console.log(p.productId)
+    },
+    aa() {
+      console.log(1)
     },
   },
   computed: {
