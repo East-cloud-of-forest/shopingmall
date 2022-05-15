@@ -27,7 +27,7 @@
         v-for="product in mainproduct"
         :key="product.productId"
       >
-        <v-card flat @click="goProductDetail(product)">
+        <v-card flat @click="goProductDetail(product.productId)">
           <v-hover v-slot="{ hover }">
             <v-img height="200" class="red" :src="product.image">
               <v-scroll-y-reverse-transition>
@@ -40,7 +40,7 @@
                   dark
                   dense
                   class="mx-auto"
-                  style="display: block; position: relative; top: 65%;"
+                  style="display: block; position: relative; top: 65%"
                   @click.stop=""
                 >
                   <v-icon>mdi-cart-outline</v-icon>
@@ -61,21 +61,11 @@
             "
             class="py-0 mt-4 black--text"
           ></v-card-text>
-          <v-card-text>
-            {{
-              product.category4
-                ? product.category4
-                : product.category3
-                ? product.category3
-                : product.category2
-                ? product.category2
-                : product.category1
-            }}
-          </v-card-text>
+          <v-card-text> 배송 : {{ product.delivery }} </v-card-text>
           <v-card-text
             class="text-end pt-0 body-1 font-weight-medium black--text"
           >
-            {{ parseInt(product.lprice).toLocaleString('ko-KR') }} 원
+            {{ parseInt(product.lprice).toLocaleString("ko-KR") }} 원
           </v-card-text>
         </v-card>
       </v-col>
@@ -85,19 +75,22 @@
 
 <script>
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   methods: {
-    goProductDetail(p) {
-      console.log(p.productId)
+    goProductDetail(id) {
+      this.$router.push('/product/'+id)
     },
     aa() {
-      console.log(1)
+      console.log(1);
     },
   },
   computed: {
     mainproduct() {
-      return this.$store.state.mainproduct
+      return this.$store.state.mainproduct;
     },
   },
-}
+  beforeCreate() {
+    this.$store.dispatch("getMainToyData");
+  },
+};
 </script>

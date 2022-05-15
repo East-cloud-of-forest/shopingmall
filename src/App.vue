@@ -118,10 +118,6 @@ export default {
   components: {
     LogoComponenet,
   },
-
-  beforeCreate() {
-    this.$store.dispatch('getToyData')
-  },
 }
 </script>
 
