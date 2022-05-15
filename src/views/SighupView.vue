@@ -1,11 +1,11 @@
 <template>
-  <v-app class="text-center grey lighten-5">
+  <v-container class="text-center grey lighten-5">
     <v-main>
       <LogoComponenet style="width: 100px;" class="mx-auto mt-16 mb-10" />
 
       <router-view></router-view>
     </v-main>
-  </v-app>
+  </v-container>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-container>
     <div class="mx-auto mt-16 text-center">
       <h2>{{ title }}</h2>
 
@@ -11,7 +11,7 @@
       </v-btn-toggle>
 
       <v-card
-        max-width="423"
+        max-width="365"
         elevation="0"
         tile
         outlined
@@ -31,7 +31,7 @@
         </div>
       </v-card>
     </div>
-  </v-app>
+  </v-container>
 </template>
 
 <script>

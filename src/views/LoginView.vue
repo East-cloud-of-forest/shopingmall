@@ -1,10 +1,11 @@
 <template>
-  <v-app>
+  <v-container>
     <v-btn-toggle
       group
       mandatory
+      style="display:block;"
       color="orange accent-3"
-      class="mx-auto mt-15"
+      class="text-center mt-15"
       v-model="loginChoice"
     >
       <v-btn value="normal"> 일반회원 로그인 </v-btn>
@@ -39,7 +40,7 @@
         </v-btn>
       </div>
     </v-card>
-  </v-app>
+  </v-container>
 </template>
 
 <script>

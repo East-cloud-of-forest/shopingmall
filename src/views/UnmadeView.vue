@@ -1,10 +1,10 @@
 <template>
-  <v-app class="text-center">
+  <v-container class="text-center">
     <p>미구현</p>
     <v-btn text x-large class="mx-auto" @click="$router.push('/')">
       <h2>메인 화면으로 돌아가기</h2>
     </v-btn>
-  </v-app>
+  </v-container>
 </template>
 
 <script>
