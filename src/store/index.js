@@ -67,11 +67,19 @@ export default new Vuex.Store({
           if (status === 0 || (status >= 200 && status < 400)) {
             let data = xhr.responseXML;
             console.log(data);
+            // 상품 추가 이미지 갯수
+            let AddImageLength = Array.prototype.slice.call(data.querySelector('Product').children).filter((a)=>a.nodeName.slice(0, -1) == 'AddImage').length
             let currentproduct = new Object
             currentproduct.name = getProductInnerHTML(data, 'ProductName')
             currentproduct.price = getProductInnerHTML(data, 'Price')
             currentproduct.img = getProductInnerHTML(data, 'BasicImage')
             currentproduct.ship = getProductInnerHTML(data, 'ShipFee')
+            let AddImage = new Array
+            for (let i = 1; i <= AddImageLength; i++) {
+              AddImage.push(getProductInnerHTML(data, 'AddImage'+[i]))
+            }
+            currentproduct.addimg = AddImage
+
             state.currentproduct = currentproduct
           } else {
             console.log(xhr);
