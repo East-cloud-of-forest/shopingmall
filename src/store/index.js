@@ -8,7 +8,9 @@ export default new Vuex.Store({
   state: {
     user: [],
     mainproduct: [],
-    currentproduct: {},
+    currentproduct: {
+      img: []
+    },
     key: "e7765a8802c849b94cee275f83404522",
   },
   getters: {},
@@ -17,7 +19,9 @@ export default new Vuex.Store({
       router.push("/unmade");
     },
     resetcurrentproduct(state) {
-      state.currentproduct = {}
+      state.currentproduct = {
+        img: []
+      }
     }
   },
   actions: {
@@ -72,14 +76,13 @@ export default new Vuex.Store({
             let currentproduct = new Object
             currentproduct.name = getProductInnerHTML(data, 'ProductName')
             currentproduct.price = getProductInnerHTML(data, 'Price')
-            currentproduct.img = getProductInnerHTML(data, 'BasicImage')
             currentproduct.ship = getProductInnerHTML(data, 'ShipFee')
-            let AddImage = new Array
+            let img = new Array
+            img.push(getProductInnerHTML(data, 'BasicImage'))
             for (let i = 1; i <= AddImageLength; i++) {
-              AddImage.push(getProductInnerHTML(data, 'AddImage'+[i]))
+              img.push(getProductInnerHTML(data, 'AddImage'+[i]))
             }
-            currentproduct.addimg = AddImage
-
+            currentproduct.img = img
             state.currentproduct = currentproduct
           } else {
             console.log(xhr);
