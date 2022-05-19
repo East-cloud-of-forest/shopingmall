@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width:1200px" class="mx-auto">
+  <div style="max-width: 1200px" class="mx-auto">
     <v-row class="mt-16">
       <!-- 상품 이미지 -->
       <v-col cols="6">
@@ -23,9 +23,9 @@
         <v-card flat class="pa-5 pt-0">
           <v-subheader>
             <v-icon dense>mdi-home-outline</v-icon>
-            <span class="text-subtitle-1 success--text">{{sellernick}}</span>
+            <span class="text-subtitle-1 success--text">{{ sellernick }}</span>
             <span class="mx-2">|</span>
-            <span>{{sellerid}}</span>
+            <span>{{ sellerid }}</span>
           </v-subheader>
           <v-card-text class="pt-0 black--text">
             <p class="text-h5 font-weight-bold ma-0">
@@ -35,9 +35,16 @@
           <v-card-text class="pt-0">
             <table width="100%">
               <tr class="text-body-1 orange--text text--darken-3" v-if="sale">
-                <td rowspan="2" width="20%" class="red--text text-h4">{{sale.discount}}%</td>
+                <td rowspan="2" width="20%" class="red--text text-h4">
+                  {{ sale.discount }}%
+                </td>
                 <td width="20%">판매가</td>
-                <td><span class="text-decoration-line-through text-caption mr-2 grey--text">{{ product.price }}</span>{{sale.sprice}}원</td>
+                <td>
+                  <span
+                    class="text-decoration-line-through text-caption mr-2 grey--text"
+                    >{{ product.price }}</span
+                  >{{ sale.sprice }}원
+                </td>
               </tr>
               <tr class="text-body-1 orange--text text--darken-3" v-else>
                 <td width="20%">판매가</td>
@@ -50,13 +57,49 @@
             </table>
           </v-card-text>
           <v-card-actions>
-            <v-select outlined dense></v-select>
+            <v-select
+              outlined
+              dense
+              v-for="option in options"
+              :key="option.order"
+              :label="option.name"
+              :items="option.value"
+              v-model="selectoption"
+              item-text="name"
+              return-object
+              hide-details
+            >
+              <template #selection="{ item }">
+                <div>
+                  {{ item.name }}
+                </div>
+              </template>
+              <template #item="{ item }">
+                <div style="width:100%;">
+                  <p class="blakc--text">{{ item.name }}</p>
+                  <p class="text-end text-h6 orange--text">{{ item.price }}</p>
+                </div>
+              </template>
+            </v-select>
+          </v-card-actions>
+          <v-card-actions>
+            <v-card width="100%" outlined>
+              <v-card-title v-if="!selectoption" class="grey--text"
+                >옵션을 선택해주세요</v-card-title
+              >
+              <div v-else>
+                <v-card-title>{{ selectoption.name }}</v-card-title>
+                <v-card-text class="orange--text text-h6 text-end">{{
+                  selectoption.price
+                }}</v-card-text>
+              </div>
+            </v-card>
           </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
     <h1>{{ product }}</h1>
-    <h1>{{$route.params}}</h1>
+    <h1>{{ $route.params }}</h1>
   </div>
 </template>
 
@@ -66,26 +109,30 @@ export default {
     return {
       imgindex: 0,
       sale: this.$route.params.sale,
-      reviewcount: this.$route.params.currentinfo.review,
       sellerid: this.$route.params.currentinfo.sellerid,
       sellernick: this.$route.params.currentinfo.sellernick,
-    }
+      selectoption: false,
+    };
   },
   computed: {
     product() {
-      return this.$store.state.currentproduct
+      return this.$store.state.currentproduct;
+    },
+
+    options() {
+      return this.$store.state.currentproduct.options;
     },
   },
   methods: {
     changeImg(i) {
-      this.imgindex = i
+      this.imgindex = i;
     },
   },
   beforeCreate() {
-    this.$store.dispatch('getCurrentProduct', this.$route.params.productId)
+    this.$store.dispatch("getCurrentProduct", this.$route.params.productId);
   },
   destroyed() {
-    this.$store.commit('resetcurrentproduct')
+    this.$store.commit("resetcurrentproduct");
   },
-}
+};
 </script>

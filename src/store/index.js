@@ -18,14 +18,23 @@ export default new Vuex.Store({
     unmade() {
       router.push("/unmade");
     },
+
     resetcurrentproduct(state) {
       state.currentproduct = {
         img: []
       }
+    },
+
+    setMainToyData(state, data) {
+      state.mainproduct = data
+    },
+
+    setCurrentProduct(state, data) {
+      state.currentproduct = data
     }
   },
   actions: {
-    getMainToyData({ state }) {
+    getMainToyData({ state, commit }) {
       const xhr = new XMLHttpRequest();
       const apicode = "ProductSearch";
       const serchkeyword = "동물인형";
@@ -67,7 +76,7 @@ export default new Vuex.Store({
               });
             }
             // 데이터 삽입
-            state.mainproduct = mainproduct;
+            commit('setMainToyData', mainproduct)
             console.log(data);
           } else {
             console.log(xhr);
@@ -78,7 +87,7 @@ export default new Vuex.Store({
       xhr.send();
     },
 
-    getCurrentProduct({ state }, productCode) {
+    getCurrentProduct({ state, commit }, productCode) {
       const xhr = new XMLHttpRequest();
       const apicode = "ProductInfo";
       const curl = `http://localhost:8080/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&productCode=${productCode}&option=QAs,PostScripts,PdOption`;
@@ -90,13 +99,36 @@ export default new Vuex.Store({
           if (status === 0 || (status >= 200 && status < 400)) {
             let data = xhr.responseXML;
             console.log(data);
-            // 상품 추가 이미지 갯수
-            let AddImageLength = Array.prototype.slice.call(data.querySelector('Product').children).filter((a)=>a.nodeName.slice(0, -1) == 'AddImage').length
             // state에 삽입될 객체
             let currentproduct = new Object
             currentproduct.name = getProductInnerHTML(data, 'ProductName')
             currentproduct.price = getProductInnerHTML(data, 'Price')
             currentproduct.ship = getProductInnerHTML(data, 'ShipFee')
+            // 옵션
+            if (data.getElementsByTagName('ProductOption').length > 0) {currentproduct.status = getProductInnerHTML(data, "status")=='Y'?true:false
+            let listE = data.getElementsByTagName('OptionList')[0]
+            let optionsE = listE.getElementsByTagName('Option')
+            let options = new Array()
+            for (let i of optionsE) {
+              let valuelist = i.getElementsByTagName('Value')
+              let value = new Array()
+              for(let j of valuelist) {
+                value.push({
+                  order: getProductInnerHTML(j, 'Order') ,
+                  name: getProductInnerHTML(j, 'ValueName') ,
+                  price: getProductInnerHTML(j, 'Price')
+                })
+              }
+              options.push({
+                order: getProductInnerHTML(i, 'Order'),
+                name: getProductInnerHTML(i, 'TitleName'),
+                mandatorry: getProductInnerHTML(i, 'MandatoryYN')=='Y'?true:false,
+                value: value
+              }) 
+            }
+            currentproduct.options = options}
+            // 추가 이미지
+            let AddImageLength = Array.prototype.slice.call(data.querySelector('Product').children).filter((a)=>a.nodeName.slice(0, -1) == 'AddImage').length
             let img = new Array
             img.push(getProductInnerHTML(data, 'BasicImage'))
             for (let i = 1; i <= AddImageLength; i++) {
@@ -104,7 +136,7 @@ export default new Vuex.Store({
             }
             currentproduct.img = img
             // 데이터 삽입
-            state.currentproduct = currentproduct
+            commit('setCurrentProduct', currentproduct)
           } else {
             console.log(xhr);
           }
