@@ -38,16 +38,35 @@ export default new Vuex.Store({
           if (status === 0 || (status >= 200 && status < 400)) {
             let data = xhr.responseXML;
             let product = data.getElementsByTagName("Product");
+            // state에 삽입 될 배열
             let mainproduct = [];
+            // 데이터 정제
             for (let i of product) {
+              let price = getProductInnerHTML(i, "ProductPrice")
+              let sprice = getProductInnerHTML(i, "SalePrice")
+              // 세일 여부 판단 및 세일 데이터 정제
+              let sale = false
+              if (price !== sprice) {
+                sale = {
+                  sprice: sprice,
+                  discount: Math.floor(getProductInnerHTML(i, "Discount")/price * 100)
+                }
+              }
+              // 최종 데이터 결정
               mainproduct.push({
                 productId: getProductInnerHTML(i, "ProductCode"),
                 image: getProductInnerHTML(i, "ProductImage300"),
                 title: getProductInnerHTML(i, "ProductName"),
-                lprice: getProductInnerHTML(i, "ProductPrice"),
+                price: price,
                 delivery: getProductInnerHTML(i, "Delivery"),
+                sale: sale,
+                currentinfo: {
+                  sellerid: getProductInnerHTML(i, "Seller"),
+                  sellernick: getProductInnerHTML(i, "SellerNick")
+                }
               });
             }
+            // 데이터 삽입
             state.mainproduct = mainproduct;
             console.log(data);
           } else {
@@ -62,7 +81,7 @@ export default new Vuex.Store({
     getCurrentProduct({ state }, productCode) {
       const xhr = new XMLHttpRequest();
       const apicode = "ProductInfo";
-      const curl = `http://localhost:8080/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&productCode=${productCode}`;
+      const curl = `http://localhost:8080/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&productCode=${productCode}&option=QAs,PostScripts,PdOption`;
 
       xhr.onreadystatechange = function (event) {
         const { target } = event;
@@ -73,6 +92,7 @@ export default new Vuex.Store({
             console.log(data);
             // 상품 추가 이미지 갯수
             let AddImageLength = Array.prototype.slice.call(data.querySelector('Product').children).filter((a)=>a.nodeName.slice(0, -1) == 'AddImage').length
+            // state에 삽입될 객체
             let currentproduct = new Object
             currentproduct.name = getProductInnerHTML(data, 'ProductName')
             currentproduct.price = getProductInnerHTML(data, 'Price')
@@ -83,6 +103,7 @@ export default new Vuex.Store({
               img.push(getProductInnerHTML(data, 'AddImage'+[i]))
             }
             currentproduct.img = img
+            // 데이터 삽입
             state.currentproduct = currentproduct
           } else {
             console.log(xhr);

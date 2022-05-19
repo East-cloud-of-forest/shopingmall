@@ -27,7 +27,7 @@
         v-for="product in mainproduct"
         :key="product.productId"
       >
-        <v-card flat @click="goProductDetail(product.productId)">
+        <v-card flat @click="goProductDetail(product.productId, product.sale, product.currentinfo)">
           <v-hover v-slot="{ hover }">
             <v-img height="200" class="red" :src="product.image">
               <v-scroll-y-reverse-transition>
@@ -63,9 +63,17 @@
           ></v-card-text>
           <v-card-text> 배송 : {{ product.delivery }} </v-card-text>
           <v-card-text
-            class="text-end pt-0 body-1 font-weight-medium black--text"
+            class="pt-0 d-flex align-center" v-if="product.sale"
           >
-            {{ parseInt(product.lprice).toLocaleString("ko-KR") }} 원
+            <span class="red--text font-weight-bold body-1">{{product.sale.discount}} %</span>
+            <v-spacer></v-spacer>
+            <span class="text-decoration-line-through mr-1 caption">{{ parseInt(product.price).toLocaleString("ko-KR") }} 원</span>
+            <span class="body-1 orange--text">{{ parseInt(product.sale.sprice).toLocaleString("ko-KR") }} 원</span>
+          </v-card-text>
+          <v-card-text
+            class="pt-0 body-1 font-weight-medium black--text" v-else
+          >
+            {{ parseInt(product.price).toLocaleString("ko-KR") }} 원
           </v-card-text>
         </v-card>
       </v-col>
@@ -77,8 +85,12 @@
 export default {
   name: "HomeView",
   methods: {
-    goProductDetail(id) {
-      this.$router.push('/product/'+id)
+    goProductDetail(id, sale, currentinfo) {
+      this.$router.push({name:'product', params: {
+        productId: id,
+        sale: sale,
+        currentinfo: currentinfo
+        }})
     },
     aa() {
       console.log(1);
