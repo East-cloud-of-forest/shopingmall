@@ -1,5 +1,5 @@
 <template>
-  <v-container class="text-center grey lighten-5">
+  <v-container class="text-center grey lighten-5" style="min-width:100%; min-height:100%;">
     <v-main>
       <LogoComponenet style="width: 100px;" class="mx-auto mt-16 mb-10" />
 
