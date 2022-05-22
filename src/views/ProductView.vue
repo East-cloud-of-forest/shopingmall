@@ -98,7 +98,7 @@
               </v-card-title>
               <!-- 옵션이 선택되었을 때 -->
               <div v-else v-for="(item, i) in selectoptions" :key="i + '-' + item.order">
-                <div class="d-flex align-center pr-4">
+                <div class="d-flex justify-space-between align-center pr-4">
                   <v-card-title class="py-2">{{ item.name }}</v-card-title>
                   <!-- 옵션 삭제 -->
                   <v-btn icon @click="deleteoption(item.name)">
@@ -151,7 +151,7 @@
             </v-card>
           </v-card-actions>
           <!-- 선택된 총 금액 -->
-          <v-card-text class="d-flex justify-between align-center py-2" v-if="selectoptions.length > 0">
+          <v-card-text class="d-flex justify-end align-center py-2" v-if="selectoptions.length > 0">
             <p class="mr-5 mb-0">총 상품금액</p>
             <h2 class="deep-orange--text">{{allprice.toLocaleString("ko-KR")}} 원</h2>
           </v-card-text>
@@ -168,6 +168,40 @@
             >{{btn.name}}</v-btn>
           </v-card-actions>
         </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col cols="12">
+        <v-tabs 
+          background-color="orange accent-2"
+          slider-size="0"
+          slider-color="white"
+          grow dark
+          color="orange"
+          active-class="white text-orange"
+          v-model="tab"
+        >
+          <v-tab class="text-h5">
+            상품 Q&A
+          </v-tab>
+          <v-tab class="text-h5">
+            상품리뷰
+          </v-tab>
+        </v-tabs>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-tabs-items v-model="tab">
+          <v-tab-item>
+            상품 Q&A
+          </v-tab-item>
+          <v-tab-item>
+            상품리뷰
+          </v-tab-item>
+        </v-tabs-items>
       </v-col>
     </v-row>
     <h1>{{ product }}</h1>
@@ -196,6 +230,7 @@ export default {
         },
       },
       formfocus: false,
+      tab: null
     };
   },
   computed: {
