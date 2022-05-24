@@ -135,6 +135,21 @@ export default new Vuex.Store({
               img.push(getProductInnerHTML(data, 'AddImage'+[i]))
             }
             currentproduct.img = img
+            // QA
+            let QAsE = data.getElementsByTagName('QA')
+            let QAs = new Array
+            let j = 1
+            for (let i of QAsE) {
+              QAs.push({
+                id: j,
+                title: getProductInnerHTML(i, 'Title'),
+                writer: getProductInnerHTML(i, 'Writer'),
+                date: getProductInnerHTML(i, 'Date'),
+                answer: '답변완료'
+              })
+              j += 1
+            }
+            currentproduct.qas = QAs
             // 데이터 삽입
             commit('setCurrentProduct', currentproduct)
           } else {

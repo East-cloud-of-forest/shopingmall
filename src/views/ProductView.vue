@@ -171,6 +171,7 @@
       </v-col>
     </v-row>
 
+    <!-- 상품 상세 탭 -->
     <v-row>
       <v-col cols="12">
         <v-tabs 
@@ -182,6 +183,9 @@
           active-class="white text-orange"
           v-model="tab"
         >
+          <v-tab class="text-h5">
+            상세정보
+          </v-tab>
           <v-tab class="text-h5">
             상품 Q&A
           </v-tab>
@@ -195,8 +199,53 @@
     <v-row>
       <v-col>
         <v-tabs-items v-model="tab">
-          <v-tab-item>
-            상품 Q&A
+          <v-tab-item class="text-center">
+            <p class="display-1 mx-auto my-16" style="width:70%;">{{ product.name }}</p>
+            <v-img v-for="(img, i) in product.img" :key="i" :src="img" />
+          </v-tab-item>
+          <v-tab-item class="px-2">
+            <p v-if="product.qas" class="body-2">
+              상품문의({{product.qas.length}})
+            </p>
+            <v-divider></v-divider>
+            <v-data-table dense
+              :items-per-page="10"
+              disable-sort
+              :headers="[
+                {
+                  text: '번호',
+                  align: 'center',
+                  value: 'id',
+                  width: '10%'
+                },
+                {text: '답변상태', value: 'answer', width: '13%'},
+                {text: '문의제목', value: 'title', width: '32%'},
+                {text: '작성자', value: 'writer', width: '10%'},
+                {text: '작성일지', value: 'date', width: '15%'},
+              ]"
+              :items="product.qas"
+            >
+              <template v-slot:[`item.answer`]="{ item }">
+                <p class="text-caption ma-0 success--text">
+                  {{item.answer}}
+                </p>
+              </template>
+              <template v-slot:[`item.title`]="{ item }">
+                <p class="text-caption ma-0">
+                  {{item.title == 'null' ? '' : item.title}}
+                </p>
+              </template>
+              <template v-slot:[`item.writer`]="{ item }">
+                <p class="text-caption ma-0" style="overflow:hidden;">
+                  {{item.writer}}
+                </p>
+              </template>
+              <template v-slot:[`item.date`]="{ item }">
+                <p class="text-caption ma-0">
+                  {{item.date}}
+                </p>
+              </template>
+            </v-data-table>
           </v-tab-item>
           <v-tab-item>
             상품리뷰
