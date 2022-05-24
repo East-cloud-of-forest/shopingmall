@@ -91,13 +91,22 @@
           </v-card-actions>
           <!-- 선택된 옵션 -->
           <v-card-actions>
-            <v-card width="100%" outlined max-height="350" style="overflow:auto;">
+            <v-card
+              width="100%"
+              outlined
+              max-height="350"
+              style="overflow: auto"
+            >
               <!-- 옵션이 선택되지 않았을때 -->
               <v-card-title v-if="!selectoptions.length > 0" class="grey--text">
                 옵션을 선택해주세요
               </v-card-title>
               <!-- 옵션이 선택되었을 때 -->
-              <div v-else v-for="(item, i) in selectoptions" :key="i + '-' + item.order">
+              <div
+                v-else
+                v-for="(item, i) in selectoptions"
+                :key="i + '-' + item.order"
+              >
                 <div class="d-flex justify-space-between align-center pr-4">
                   <v-card-title class="py-2">{{ item.name }}</v-card-title>
                   <!-- 옵션 삭제 -->
@@ -143,29 +152,43 @@
                     </v-btn>
                   </v-card-actions>
                   <!-- 옵션 총 금액 -->
-                  <v-card-text class="orange--text text-h6 justify-end py-2 d-flex align-center">
-                    {{(item.intprice * item.selectcount).toLocaleString("ko-KR")}} 원
+                  <v-card-text
+                    class="orange--text text-h6 justify-end py-2 d-flex align-center"
+                  >
+                    {{
+                      (item.intprice * item.selectcount).toLocaleString("ko-KR")
+                    }}
+                    원
                   </v-card-text>
                 </div>
               </div>
             </v-card>
           </v-card-actions>
           <!-- 선택된 총 금액 -->
-          <v-card-text class="d-flex justify-end align-center py-2" v-if="selectoptions.length > 0">
+          <v-card-text
+            class="d-flex justify-end align-center py-2"
+            v-if="selectoptions.length > 0"
+          >
             <p class="mr-5 mb-0">총 상품금액</p>
-            <h2 class="deep-orange--text">{{allprice.toLocaleString("ko-KR")}} 원</h2>
+            <h2 class="deep-orange--text">
+              {{ allprice.toLocaleString("ko-KR") }} 원
+            </h2>
           </v-card-text>
           <!-- 결정 부분 -->
           <v-card-actions v-if="selectoptions.length > 0" class="d-flex">
             <v-btn
               outlined
-              v-for="(btn, i) in [{name: '장바구니', color: 'pink accent-3'}, {name: '구매하기', color: 'deep-orange'}]"
+              v-for="(btn, i) in [
+                { name: '장바구니', color: 'pink accent-3' },
+                { name: '구매하기', color: 'deep-orange' },
+              ]"
               :key="i"
               x-large
               width="49%"
               class="ma-0"
               :color="btn.color"
-            >{{btn.name}}</v-btn>
+              >{{ btn.name }}</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-col>
@@ -174,24 +197,19 @@
     <!-- 상품 상세 탭 -->
     <v-row>
       <v-col cols="12">
-        <v-tabs 
+        <v-tabs
           background-color="orange accent-2"
           slider-size="0"
           slider-color="white"
-          grow dark
+          grow
+          dark
           color="orange"
           active-class="white text-orange"
           v-model="tab"
         >
-          <v-tab class="text-h5">
-            상세정보
-          </v-tab>
-          <v-tab class="text-h5">
-            상품 Q&A
-          </v-tab>
-          <v-tab class="text-h5">
-            상품리뷰
-          </v-tab>
+          <v-tab class="text-h5"> 상세정보 </v-tab>
+          <v-tab class="text-h5"> 상품 Q&A </v-tab>
+          <v-tab class="text-h5"> 상품리뷰 </v-tab>
         </v-tabs>
       </v-col>
     </v-row>
@@ -200,15 +218,18 @@
       <v-col>
         <v-tabs-items v-model="tab">
           <v-tab-item class="text-center">
-            <p class="display-1 mx-auto my-16" style="width:70%;">{{ product.name }}</p>
+            <p class="display-1 mx-auto my-16" style="width: 70%">
+              {{ product.name }}
+            </p>
             <v-img v-for="(img, i) in product.img" :key="i" :src="img" />
           </v-tab-item>
           <v-tab-item class="px-2">
             <p v-if="product.qas" class="body-2">
-              상품문의({{product.qas.length}})
+              상품문의({{ product.qas.length }})
             </p>
             <v-divider></v-divider>
-            <v-data-table dense
+            <v-data-table
+              dense
               :items-per-page="10"
               disable-sort
               :headers="[
@@ -216,40 +237,55 @@
                   text: '번호',
                   align: 'center',
                   value: 'id',
-                  width: '10%'
+                  width: '5%',
+                  cellClass: 'text-caption',
                 },
-                {text: '답변상태', value: 'answer', width: '13%'},
-                {text: '문의제목', value: 'title', width: '32%'},
-                {text: '작성자', value: 'writer', width: '10%'},
-                {text: '작성일지', value: 'date', width: '15%'},
+                {
+                  text: '답변상태',
+                  value: 'answer',
+                  width: '8%',
+                  cellClass: 'text-caption ma-0 success--text',
+                },
+                { text: '문의제목', value: 'title', width: '40%' },
+                {
+                  text: '작성자',
+                  value: 'writer',
+                  width: '5%',
+                  cellClass: 'text-caption ma-0 pr-0',
+                  class: 'pr-0',
+                },
+                { text: '작성일지', value: 'date', width: '10%' },
               ]"
               :items="product.qas"
+              :page="qnapage"
+              hide-default-footer
             >
-              <template v-slot:[`item.answer`]="{ item }">
-                <p class="text-caption ma-0 success--text">
-                  {{item.answer}}
-                </p>
-              </template>
               <template v-slot:[`item.title`]="{ item }">
-                <p class="text-caption ma-0">
-                  {{item.title == 'null' ? '' : item.title}}
-                </p>
-              </template>
-              <template v-slot:[`item.writer`]="{ item }">
-                <p class="text-caption ma-0" style="overflow:hidden;">
-                  {{item.writer}}
-                </p>
+                <div style="width: 100%; cursor:pointer;" @click="aa">
+                  <p class="text-caption ma-0">
+                    {{ item.title == "null" ? "" : item.title }}
+                  </p>
+                  <v-icon dense>mdi-lock-outline</v-icon>
+                </div>
               </template>
               <template v-slot:[`item.date`]="{ item }">
                 <p class="text-caption ma-0">
-                  {{item.date}}
+                  {{ item.date.substr(0, 10) }}
                 </p>
+              </template>
+              <template v-slot:[`footer`]>
+                <div class="text-center">
+                  <v-pagination
+                    v-model="qnapage"
+                    :length="Math.ceil(product.qas.length / 10)"
+                    :total-visible="9"
+                    text
+                  ></v-pagination>
+                </div>
               </template>
             </v-data-table>
           </v-tab-item>
-          <v-tab-item>
-            상품리뷰
-          </v-tab-item>
+          <v-tab-item> 상품리뷰 </v-tab-item>
         </v-tabs-items>
       </v-col>
     </v-row>
@@ -266,7 +302,7 @@ export default {
       sale: this.$route.params.sale,
       sellerid: this.$route.params.currentinfo.sellerid,
       sellernick: this.$route.params.currentinfo.sellernick,
-      selectoption: '',
+      selectoption: "",
       selectoptions: [],
       rules: {
         selectcount: (v) => {
@@ -279,7 +315,8 @@ export default {
         },
       },
       formfocus: false,
-      tab: null
+      tab: null,
+      qnapage: 1,
     };
   },
   computed: {
@@ -297,12 +334,13 @@ export default {
     },
     // 총금액 계산
     allprice() {
-      let price = 0
+      let price = 0;
       for (let i in this.selectoptions) {
-        price += this.selectoptions[i].intprice * this.selectoptions[i].selectcount
+        price +=
+          this.selectoptions[i].intprice * this.selectoptions[i].selectcount;
       }
-      return price
-    }
+      return price;
+    },
   },
   methods: {
     changeImg(i) {
@@ -326,26 +364,42 @@ export default {
     // 옵션 선택해서 추가
     changeoption() {
       let addoptions = () => {
-        this.$set(this.selectoption, 'intprice', parseInt(this.selectoption.price.replace(/,/g, "").replace(/원/g, "")))
-        this.$set(this.selectoption, 'selectcount', 1)
-        this.$set(this.selectoptions, this.selectoptions.length, this.selectoption)
-      }
+        this.$set(
+          this.selectoption,
+          "intprice",
+          parseInt(this.selectoption.price.replace(/,/g, "").replace(/원/g, ""))
+        );
+        this.$set(this.selectoption, "selectcount", 1);
+        this.$set(
+          this.selectoptions,
+          this.selectoptions.length,
+          this.selectoption
+        );
+      };
       // 선택한 옵션이 0개면 추가 아니라면 이미 있는지 검사 하여 이미 있으면 있는 것에 숫자를 올리고 없으면 추가
       if (this.selectoptions.length == 0) {
-        addoptions()
+        addoptions();
       } else {
-        let serchindex = this.selectoptions.findIndex(e => e.name == this.selectoption.name)
+        let serchindex = this.selectoptions.findIndex(
+          (e) => e.name == this.selectoption.name
+        );
         if (serchindex == -1) {
-          addoptions()
+          addoptions();
         } else {
-          this.selectoptions[serchindex].selectcount++
+          this.selectoptions[serchindex].selectcount++;
         }
       }
     },
     // 옵션 삭제
     deleteoption(name) {
-      this.selectoptions.splice(this.selectoptions.findIndex(e=>e.name==name), 1)
-    }
+      this.selectoptions.splice(
+        this.selectoptions.findIndex((e) => e.name == name),
+        1
+      );
+    },
+    aa() {
+      console.log("aa");
+    },
   },
   beforeCreate() {
     this.$store.dispatch("getCurrentProduct", this.$route.params.productId);
