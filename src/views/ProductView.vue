@@ -215,82 +215,168 @@
     </v-row>
 
     <v-row>
-      <v-col>
+      <v-col cols="12">
         <v-tabs-items v-model="tab">
+          <!-- 상세정보 -->
           <v-tab-item class="text-center">
             <p class="display-1 mx-auto my-16" style="width: 70%">
               {{ product.name }}
             </p>
             <v-img v-for="(img, i) in product.img" :key="i" :src="img" />
           </v-tab-item>
+          <!-- 상품문의 -->
           <v-tab-item class="px-2">
             <p v-if="product.qas" class="body-2">
               상품문의({{ product.qas.length }})
             </p>
             <v-divider></v-divider>
-            <v-data-table
-              dense
-              :items-per-page="10"
-              disable-sort
-              :headers="[
-                {
-                  text: '번호',
-                  align: 'center',
-                  value: 'id',
-                  width: '5%',
-                  cellClass: 'text-caption',
-                },
-                {
-                  text: '답변상태',
-                  value: 'answer',
-                  width: '8%',
-                  cellClass: 'text-caption ma-0 success--text',
-                },
-                { text: '문의제목', value: 'title', width: '40%' },
-                {
-                  text: '작성자',
-                  value: 'writer',
-                  width: '5%',
-                  cellClass: 'text-caption ma-0 pr-0',
-                  class: 'pr-0',
-                },
-                { text: '작성일지', value: 'date', width: '10%' },
-              ]"
-              :items="product.qas"
-              :page="qnapage"
-              hide-default-footer
-            >
-              <template v-slot:[`item.title`]="{ item }">
-                <div style="width: 100%; cursor:pointer;" @click="aa">
+            <div v-if="product.qas">
+              <v-card class="text-center" v-if="product.qas.length == 0">
+                <v-card-text> 상품문의가 존재하지 않습니다 </v-card-text>
+              </v-card>
+              <v-data-table
+                v-else
+                dense
+                :items-per-page="10"
+                disable-sort
+                :headers="[
+                  {
+                    text: '번호',
+                    align: 'center',
+                    value: 'id',
+                    width: '5%',
+                    cellClass: 'text-caption',
+                  },
+                  {
+                    text: '답변상태',
+                    value: 'answer',
+                    width: '8%',
+                    cellClass: 'text-caption ma-0 success--text',
+                  },
+                  { text: '문의제목', value: 'title', width: '40%' },
+                  {
+                    text: '작성자',
+                    value: 'writer',
+                    width: '5%',
+                    cellClass: 'text-caption ma-0 pr-0',
+                    class: 'pr-0',
+                  },
+                  { text: '작성일지', value: 'date', width: '10%' },
+                ]"
+                :items="product.qas"
+                :page="tabelpage[0]"
+                hide-default-footer
+              >
+                <template v-slot:[`item.title`]="{ item }">
+                  <div style="width: 100%; cursor: pointer" @click="aa">
+                    <p class="text-caption ma-0">
+                      {{ item.title == "null" ? "" : item.title }}
+                    </p>
+                    <v-icon dense>mdi-lock-outline</v-icon>
+                  </div>
+                </template>
+                <template v-slot:[`item.date`]="{ item }">
                   <p class="text-caption ma-0">
-                    {{ item.title == "null" ? "" : item.title }}
+                    {{ item.date.substr(0, 10) }}
                   </p>
-                  <v-icon dense>mdi-lock-outline</v-icon>
-                </div>
-              </template>
-              <template v-slot:[`item.date`]="{ item }">
-                <p class="text-caption ma-0">
-                  {{ item.date.substr(0, 10) }}
-                </p>
-              </template>
-              <template v-slot:[`footer`]>
-                <div class="text-center">
-                  <v-pagination
-                    v-model="qnapage"
-                    :length="Math.ceil(product.qas.length / 10)"
-                    :total-visible="9"
-                    text
-                  ></v-pagination>
-                </div>
-              </template>
-            </v-data-table>
+                </template>
+                <template v-slot:[`footer`]>
+                  <div class="text-center">
+                    <v-pagination
+                      v-model="tabelpage[0]"
+                      :length="Math.ceil(product.qas.length / 10)"
+                      :total-visible="9"
+                      text
+                    ></v-pagination>
+                  </div>
+                </template>
+              </v-data-table>
+            </div>
           </v-tab-item>
-          <v-tab-item> 상품리뷰 </v-tab-item>
+          <!-- 상품리뷰 -->
+          <v-tab-item>
+            <p v-if="product.review" class="body-2">
+              상품리뷰({{ product.review.length }})
+            </p>
+            <div v-if="product.review">
+              <v-card class="text-center" v-if="product.review.length == 0">
+                <v-card-text> 상품리뷰가 존재하지 않습니다 </v-card-text>
+              </v-card>
+              <v-data-table
+                v-else
+                dense
+                :items-per-page="10"
+                disable-sort
+                :headers="[
+                  {
+                    text: '번호',
+                    align: 'center',
+                    value: 'id',
+                    width: '5%',
+                    cellClass: 'text-caption',
+                  },
+                  {
+                    text: '만족도',
+                    value: 'star',
+                    width: '8%',
+                  },
+                  { text: '문의제목', value: 'title', width: '40%' },
+                  {
+                    text: '작성자',
+                    value: 'writer',
+                    width: '5%',
+                    cellClass: 'text-caption ma-0 pr-0',
+                    class: 'pr-0',
+                  },
+                  { text: '작성일지', value: 'date', width: '10%' },
+                ]"
+                :items="product.review"
+                :page="tabelpage[1]"
+                hide-default-footer
+              >
+                <template v-slot:[`item.star`]="{ item }">
+                  <div style="width: 100%; cursor: pointer" class="review">
+                    <v-rating
+                      v-model="item.star"
+                      background-color="orange lighten-3"
+                      color="orange"
+                      large
+                      readonly
+                      small
+                      size="10"
+                      half-increments
+                    ></v-rating>
+                  </div>
+                </template>
+                <template v-slot:[`item.title`]="{ item }">
+                  <div style="width: 100%; cursor: pointer" @click="aa">
+                    <p class="text-caption ma-0">
+                      {{ item.title == "null" ? "" : item.title }}
+                    </p>
+                  </div>
+                </template>
+                <template v-slot:[`item.date`]="{ item }">
+                  <p class="text-caption ma-0">
+                    {{ item.date.substr(0, 10) }}
+                  </p>
+                </template>
+                <template v-slot:[`footer`]>
+                  <div class="text-center">
+                    <v-pagination
+                      v-model="tabelpage[1]"
+                      :length="Math.ceil(product.qas.length / 10)"
+                      :total-visible="9"
+                      text
+                    ></v-pagination>
+                  </div>
+                </template>
+              </v-data-table>
+            </div>
+            <v-divider></v-divider>
+          </v-tab-item>
         </v-tabs-items>
       </v-col>
     </v-row>
-    <h1>{{ product }}</h1>
-    <h1>{{ $route.params }}</h1>
   </div>
 </template>
 
@@ -316,7 +402,7 @@ export default {
       },
       formfocus: false,
       tab: null,
-      qnapage: 1,
+      tabelpage: [1, 1],
     };
   },
   computed: {
@@ -413,5 +499,8 @@ export default {
 <style>
 .product-input input {
   text-align: center;
+}
+.review .v-rating .v-icon {
+  padding: 0 !important;
 }
 </style>

@@ -88,6 +88,17 @@
     <v-main min-height="100%">
       <router-view />
     </v-main>
+
+    <v-divider></v-divider>
+    <v-footer color="white">
+      <div>
+        <p class="mt-10 mb-0 font-weight-bold text-body-1">토이쇼핑몰(portfolio)</p>
+        <p class="caption grey--text">&copy; 2022. ecof. All rights reserved. code by ecof.</p>
+        <p class="text-body-2 mb-0">대표이사: 아무개, 주소: 부산광역시 어딘가 77, Tel:7676-7676</p>
+        <p class="text-body-2">사업자등록번호: 767-76-76767</p>
+        <p class="caption font-weight-bold">본 사이트의 상품정보는 11번가 OPEN API에서 제공받았음을 명시합니다.</p>
+      </div>
+    </v-footer>
   </v-app>
 </template>
 

@@ -150,6 +150,21 @@ export default new Vuex.Store({
               j += 1
             }
             currentproduct.qas = QAs
+            // review
+            let reviewE = data.getElementsByTagName('PostScript')
+            let review = new Array
+            let n = 1
+            for (let i of reviewE) {
+              review.push({
+                id: n,
+                title: getProductInnerHTML(i, 'Title'),
+                writer: getProductInnerHTML(i, 'Writer'),
+                date: getProductInnerHTML(i, 'Date'),
+                star: (Math.floor((Math.random()*31) + 70)) / 20
+              })
+              n += 1
+            }
+            currentproduct.review = review
             // 데이터 삽입
             commit('setCurrentProduct', currentproduct)
           } else {
