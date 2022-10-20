@@ -3,10 +3,11 @@ module.exports = defineConfig({
   transpileDependencies: ["vuetify"],
   publicPath: '/',
   devServer: {
+    historyApiFallback: true,
     proxy: {
-      "/": {
+      "/api": {
         'target': "http://openapi.11st.co.kr/",
-        'pathRewrite': { "^/": "" },
+        'pathRewrite': { "^/api": "/" },
         'changeOrigin': true,
         'secure': false,
         'ws': false,

@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import router from "../router";
 
 Vue.use(Vuex);
-
 export default new Vuex.Store({
   state: {
     user: [],
@@ -38,7 +37,7 @@ export default new Vuex.Store({
       const xhr = new XMLHttpRequest();
       const apicode = "ProductSearch";
       const serchkeyword = "동물인형";
-      const curl = `http://localhost:8080/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&keyword=${serchkeyword}&targetSearchPrd=KOR&pageSize=12&sortCd=A`;
+      const curl = `/api/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&keyword=${serchkeyword}&targetSearchPrd=KOR&pageSize=12&sortCd=A`;
 
       xhr.onreadystatechange = function (event) {
         const { target } = event;
@@ -88,9 +87,10 @@ export default new Vuex.Store({
     },
 
     getCurrentProduct({ state, commit }, productCode) {
+      console.log(window.location.host)
       const xhr = new XMLHttpRequest();
       const apicode = "ProductInfo";
-      const curl = `http://localhost:8080/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&productCode=${productCode}&option=QAs,PostScripts,PdOption`;
+      const curl = `/api/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&productCode=${productCode}&option=QAs,PostScripts,PdOption`;
 
       xhr.onreadystatechange = function (event) {
         const { target } = event;

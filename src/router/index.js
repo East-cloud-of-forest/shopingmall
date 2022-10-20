@@ -79,6 +79,11 @@ const routes = [
       return import('../views/ProductView.vue')
     }
   },
+  {
+    path: "*",
+    name: 'rf',
+    component: HomeView,
+  }
 ]
 
 const router = new VueRouter({
