@@ -385,9 +385,9 @@ export default {
   data() {
     return {
       imgindex: 0,
-      sale: this.$route.params.sale,
-      sellerid: this.$route.params.currentinfo.sellerid,
-      sellernick: this.$route.params.currentinfo.sellernick,
+      sale: null,
+      sellerid: null,
+      sellernick: null,
       selectoption: "",
       selectoptions: [],
       rules: {
@@ -493,6 +493,12 @@ export default {
   destroyed() {
     this.$store.commit("resetcurrentproduct");
   },
+  mounted() {
+    let query = JSON.parse(this.$route.query.data)
+    this.sale = query.sale
+    this.sellerid = query.currentinfo.sellerid
+    this.sellernick = query.currentinfo.sellernick
+  }
 };
 </script>
 

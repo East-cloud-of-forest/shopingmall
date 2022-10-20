@@ -86,11 +86,15 @@ export default {
   name: "HomeView",
   methods: {
     goProductDetail(id, sale, currentinfo) {
-      this.$router.push({name:'product', params: {
-        productId: id,
-        sale: sale,
-        currentinfo: currentinfo
-        }})
+      this.$router.push({name:'product',
+        params: {
+          productId: id,
+        },
+        query : {data: JSON.stringify({
+          sale: sale,
+          currentinfo: currentinfo
+        })}
+      })
     },
     aa() {
       console.log(1);
