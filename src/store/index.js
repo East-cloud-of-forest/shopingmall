@@ -37,7 +37,7 @@ export default new Vuex.Store({
       const xhr = new XMLHttpRequest();
       const apicode = "ProductSearch";
       const serchkeyword = "동물인형";
-      const curl = `/api/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&keyword=${serchkeyword}&targetSearchPrd=KOR&pageSize=12&sortCd=A`;
+      const curl = `http://openapi.11st.co.kr/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&keyword=${serchkeyword}&targetSearchPrd=KOR&pageSize=12&sortCd=A`;
 
       xhr.onreadystatechange = function (event) {
         const { target } = event;
@@ -89,7 +89,7 @@ export default new Vuex.Store({
     getCurrentProduct({ state, commit }, productCode) {
       const xhr = new XMLHttpRequest();
       const apicode = "ProductInfo";
-      const curl = `/api/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&productCode=${productCode}&option=QAs,PostScripts,PdOption`;
+      const curl = `http://openapi.11st.co.kr/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&productCode=${productCode}&option=QAs,PostScripts,PdOption`;
 
       xhr.onreadystatechange = function (event) {
         const { target } = event;

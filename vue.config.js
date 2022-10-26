@@ -1,7 +1,8 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: ["vuetify"],
-  publicPath: '/',
+  publicPath: '/shopingmall/',
+  outputDir: 'dist' ,
   devServer: {
     historyApiFallback: true,
     proxy: {
