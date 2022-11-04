@@ -10,7 +10,6 @@ export default new Vuex.Store({
     currentproduct: {
       img: []
     },
-    key: "e7765a8802c849b94cee275f83404522",
   },
   getters: {},
   mutations: {
@@ -33,11 +32,11 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getMainToyData({ state, commit }) {
+    getMainToyData({ commit }) {
       const xhr = new XMLHttpRequest();
       const apicode = "ProductSearch";
       const serchkeyword = "동물인형";
-      const curl = `http://openapi.11st.co.kr/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&keyword=${serchkeyword}&targetSearchPrd=KOR&pageSize=12&sortCd=A`;
+      const curl = `https://sos20l5bo8.execute-api.ap-northeast-2.amazonaws.com/default/11shop_api?apiCode=${apicode}&keyword=${serchkeyword}`;
 
       xhr.onreadystatechange = function (event) {
         const { target } = event;
@@ -86,10 +85,10 @@ export default new Vuex.Store({
       xhr.send();
     },
 
-    getCurrentProduct({ state, commit }, productCode) {
+    getCurrentProduct({ commit }, productCode) {
       const xhr = new XMLHttpRequest();
       const apicode = "ProductInfo";
-      const curl = `http://openapi.11st.co.kr/openapi/OpenApiService.tmall?key=${state.key}&apiCode=${apicode}&productCode=${productCode}&option=QAs,PostScripts,PdOption`;
+      const curl = `https://sos20l5bo8.execute-api.ap-northeast-2.amazonaws.com/default/11shop_api?apiCode=${apicode}&productCode=${productCode}`;
 
       xhr.onreadystatechange = function (event) {
         const { target } = event;
