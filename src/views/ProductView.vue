@@ -410,7 +410,17 @@ export default {
       return this.$store.state.currentproduct;
     },
     options() {
-      return this.$store.state.currentproduct.options;
+      let option = this.$store.state.currentproduct.options ?? {
+        0:{
+            name : '선택',
+            order : '1',
+            value : [{
+              name : this.$store.state.currentproduct.name,
+              price : this.$store.state.currentproduct.price,
+            }]
+          }
+      }
+      return option;
     },
     // iinput창 focusout 일때 rules 검사
     selectoptionrule() {

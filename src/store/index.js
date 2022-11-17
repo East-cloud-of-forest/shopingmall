@@ -96,6 +96,7 @@ export default new Vuex.Store({
           const { status } = target;
           if (status === 0 || (status >= 200 && status < 400)) {
             let data = xhr.responseXML;
+            console.log(data)
             // state에 삽입될 객체
             let currentproduct = new Object
             currentproduct.name = getProductInnerHTML(data, 'ProductName')
